@@ -1,7 +1,7 @@
 {
-  "name": "calculator-app",
+  "name": "scientific-calculator",
   "version": "1.0.0",
-  "description": "Calculator web app",
+  "description": "Scientific Calculator with math functions",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
