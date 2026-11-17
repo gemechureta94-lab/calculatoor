@@ -100,6 +100,15 @@
             background: #ef4444;
         }
 
+        .btn-back {
+            background: #b91c1c;
+            color: #fff;
+        }
+
+        .btn-back:hover {
+            background: #dc2626;
+        }
+
         .btn-equal {
             background: #16a34a;
             color: #fff;
@@ -116,47 +125,49 @@
     <div class="calculator">
         <input type="text" class="display" id="display" value="0" disabled>
         <div class="buttons">
-            <!-- Scientific & Advanced Functions -->
+            <!-- Clear & Backspace -->
             <button class="btn-clear" onclick="clearDisplay()">C</button>
+            <button class="btn-back" onclick="deleteChar()">⌫</button>
             <button class="btn-sci" onclick="appendValue('(')">(</button>
             <button class="btn-sci" onclick="appendValue(')')">)</button>
-            <button class="btn-operator" onclick="appendValue('/')">&divide;</button>
 
+            <!-- Scientific Functions -->
             <button class="btn-sci" onclick="appendSci('Math.sin(', 'sin(')">sin</button>
             <button class="btn-sci" onclick="appendSci('Math.cos(', 'cos(')">cos</button>
             <button class="btn-sci" onclick="appendSci('Math.tan(', 'tan(')">tan</button>
-            <button class="btn-operator" onclick="appendValue('*')">&times;</button>
+            <button class="btn-operator" onclick="appendValue('/')">&divide;</button>
 
             <button class="btn-sci" onclick="appendSci('Math.sqrt(', '√(')">&#8730;</button>
             <button class="btn-sci" onclick="appendSci('Math.log10(', 'log(')">log</button>
             <button class="btn-sci" onclick="appendSci('Math.log(', 'ln(')">ln</button>
-            <button class="btn-operator" onclick="appendValue('-')">-</button>
+            <button class="btn-operator" onclick="appendValue('*')">&times;</button>
 
             <button onclick="appendValue('7')">7</button>
             <button onclick="appendValue('8')">8</button>
             <button onclick="appendValue('9')">9</button>
-            <button class="btn-operator" onclick="appendValue('+')">+</button>
+            <button class="btn-operator" onclick="appendValue('-')">-</button>
 
             <button onclick="appendValue('4')">4</button>
             <button onclick="appendValue('5')">5</button>
             <button onclick="appendValue('6')">6</button>
-            <button class="btn-sci" onclick="appendValue('**')">xʸ</button>
+            <button class="btn-operator" onclick="appendValue('+')">+</button>
 
             <button onclick="appendValue('1')">1</button>
             <button onclick="appendValue('2')">2</button>
             <button onclick="appendValue('3')">3</button>
-            <button class="btn-sci" onclick="appendValue('Math.PI', 'π')">π</button>
+            <button class="btn-sci" onclick="appendValue('**')">xʸ</button>
 
             <button onclick="appendValue('0')">0</button>
             <button onclick="appendValue('.')">.</button>
+            <button class="btn-sci" onclick="appendValue('Math.PI', 'π')">π</button>
             <button class="btn-equal" onclick="calculate()">=</button>
         </div>
     </div>
 
     <script>
         const display = document.getElementById('display');
-        let expression = ''; // Herrega sirrii JavaScriptaf tajaajilu
-        let displayValue = ''; // Skiriinii irratti mul'atu
+        let expression = ''; 
+        let displayValue = ''; 
 
         function appendValue(val) {
             if (display.value === '0' && val !== '.') {
@@ -186,11 +197,23 @@
             display.value = '0';
         }
 
+        // Mallattoo dhumarratti jiru tokko qofa haquuf (Backspace)
+        function deleteChar() {
+            if (displayValue.length > 1) {
+                displayValue = displayValue.slice(0, -1);
+                expression = expression.slice(0, -1);
+            } else {
+                displayValue = '';
+                expression = '';
+                display.value = '0';
+                return;
+            }
+            display.value = displayValue;
+        }
+
         function calculate() {
             try {
-                // Herregicha herreguuf eval fayyadamne
                 let result = eval(expression);
-                // Gatii herregame xumuraa sirriitti qindeeffachuu (Decimal places)
                 result = Math.round(result * 100000000) / 100000000;
                 display.value = result;
                 expression = result.toString();
